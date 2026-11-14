@@ -95,14 +95,55 @@ body{font-size:16.5px;padding-bottom:84px}
 .wa{bottom:calc(90px + env(safe-area-inset-bottom,0px));right:16px;width:52px;height:52px}
 .nx .btn{flex:1}.btn{margin-right:4px}
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
-.shot{width:100%;height:170px;object-fit:cover;object-position:top;border-radius:10px;margin-bottom:12px;border:1px solid var(--line)}
-.bgl{position:absolute;left:50%;top:50%;width:min(80vw,580px);margin-left:calc(min(80vw,580px)/-2);margin-top:calc(min(80vw,580px)/-2);perspective:900px}
-.bgl img{width:100%;border-radius:50%;opacity:.2;mix-blend-mode:screen;animation:logo3d 12s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== PREMIUM v2: logo background, particles, scroll motion ===== */
+#pc{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#pb{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,#c9902a,#fae3a0,#5b8dff);box-shadow:0 0 14px #e9bf5f}
+.bgl{display:block;position:fixed;left:50%;top:50%;width:min(96vw,680px);margin:0;transform:translate(calc(-50% + var(--gx,0)*1px),calc(-50% + var(--py,0)*1px + var(--gy,0)*1px));transition:transform .5s ease-out;perspective:900px;z-index:0}
+.bgl:before{content:"";position:absolute;inset:-7%;border-radius:50%;border:2px dashed #e9bf5f55;animation:rot 40s linear infinite}
+.bgl:after{content:"";position:absolute;inset:-18%;border-radius:50%;border:1px solid #5b8dff33;animation:rot 60s linear infinite reverse}
+.bgl img{display:block;width:100%;border-radius:50%;opacity:.17;mix-blend-mode:screen;filter:saturate(1.3) drop-shadow(0 0 60px #e9bf5f66);animation:bgf 14s ease-in-out infinite}
+@keyframes bgf{0%,100%{transform:rotateY(-18deg) rotateX(5deg) scale(1)}50%{transform:rotateY(18deg) rotateX(-5deg) scale(1.06)}}
+.rv{opacity:0;transform:translateY(38px) scale(.97);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.c.rv{animation:none}
+.c.rv.in:hover{transform:translateY(-6px)}
+.c{--mx:50%;--my:0%;background:radial-gradient(260px circle at var(--mx) var(--my),#e9bf5f2e,transparent 62%),linear-gradient(160deg,#ffffff14,#ffffff05)}
+.c.hot{background:linear-gradient(160deg,#e9bf5f26,#ffffff06)}
+h1 span{background-image:linear-gradient(100deg,#c9902a,#fae3a0,#e9bf5f,#c9902a);background-size:220% auto;animation:sh 6s linear infinite}
+@keyframes sh{to{background-position:220% center}}
+.hero3d:after{content:"";position:absolute;top:50%;left:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:var(--gold2);box-shadow:0 0 20px 5px #e9bf5f;animation:orb 7s linear infinite}
+@keyframes orb{from{transform:rotate(0) translateX(min(210px,44vw))}to{transform:rotate(360deg) translateX(min(210px,44vw))}}
+.mq{overflow:hidden;margin-top:34px;padding:14px 0;border-block:1px solid var(--line);-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mqt{display:flex;gap:44px;width:max-content;animation:mq 26s linear infinite;font:600 19px "Playfair Display",serif;color:var(--gold2);white-space:nowrap}
+.mqt span:after{content:"✦";margin-left:44px;color:var(--blue)}
+@keyframes mq{to{transform:translateX(-50%)}}
+#bn a{transition:.25s}#bn a.on{text-shadow:0 0 14px var(--gold);transform:translateY(-3px) scale(1.08)}
+@media(max-width:760px){.bgl img{opacity:.2}.mqt{font-size:17px}}
+/* ===== TOUCH EFFECTS ===== */
+.tr{position:fixed;z-index:99;width:16px;height:16px;margin:-8px;border-radius:50%;border:2px solid var(--gold2);box-shadow:0 0 22px #e9bf5f,inset 0 0 12px #e9bf5f88;pointer-events:none;animation:trg .7s ease-out forwards}
+.tr.b{border-color:var(--blue);box-shadow:0 0 22px #5b8dff,inset 0 0 12px #5b8dff88;animation-delay:.08s}
+@keyframes trg{to{transform:scale(7);opacity:0}}
+.tp{position:fixed;z-index:99;width:7px;height:7px;margin:-3.5px;border-radius:50%;pointer-events:none;background:var(--gold2);box-shadow:0 0 12px 2px #e9bf5f;animation:sp .75s cubic-bezier(.1,.8,.3,1) forwards}
+.tp.b{background:#9db9ff;box-shadow:0 0 12px 2px #5b8dff}
+.tt{position:fixed;z-index:98;width:22px;height:22px;margin:-11px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,#fae3a0cc,#e9bf5f55 45%,transparent 70%);animation:tf .8s ease-out forwards}
+@keyframes tf{to{transform:scale(.2);opacity:0}}
+.c.pressed{transform:scale(.955)!important;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 46px -4px #e9bf5faa;transition:transform .12s,box-shadow .12s}
+.btn.pressed,#links a.pressed,#bn a.pressed,.step.pressed,details.pressed{transform:scale(.93)!important;filter:brightness(1.15)}
+.wa.pressed{transform:scale(.88)!important}
+.sp{display:none}
+
+/* plain background + splash */
+body{background:var(--bg)!important}.bgs,#pc,.bgl,.orb{display:none!important}
+body.pre{overflow:hidden}body.pre nav,body.pre main,body.pre footer,body.pre #bn,body.pre .wa{visibility:hidden}
+#sp{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:var(--bg);transition:opacity .6s,visibility .6s}
+#sp.out{opacity:0;visibility:hidden}
+#sp .btn{font-size:20px;min-height:60px;padding:14px 48px;margin:0;animation:gp 2.4s ease-in-out infinite}
+@keyframes gp{50%{box-shadow:0 10px 50px 4px #e9bf5fcc}}
 </style>
 </head>
-<body>
-<div class="bgs"><div class="bgl"><img id="bgl" alt=""></div><div class="orb o1"></div><div class="orb o2"></div><div class="cube k1"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="cube k2"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="cube k3"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><nav><div class="w"><a class="logo" href="#home"><img id="nl" alt="KD logo"><b>KD</b> Web Solutions</a><div id="links"></div><button id="mb" aria-label="Menu" onclick="document.getElementById('links').classList.toggle('open')">☰</button></div></nav>
+<body class="pre"><div id="sp"><button class="btn" id="gs">Get Started</button></div>
+<div class="bgs"><div class="bgl"><img id="bgl" alt=""></div><div class="orb o1"></div><div class="orb o2"></div></div><nav><div class="w"><a class="logo" href="#home"><img id="nl" alt="KD logo"><b>KD</b> Web Solutions</a><div id="links"></div><button id="mb" aria-label="Menu" onclick="document.getElementById('links').classList.toggle('open')">☰</button></div></nav>
 <main class="w" id="app"></main>
 <div id="bn"><a href="#home">🏠<span>Home</span></a><a href="#services">🛠️<span>Services</span></a><a href="#pricing">💰<span>Pricing</span></a><a href="#projects">📁<span>Projects</span></a><a href="#contact">☎️<span>Contact</span></a></div><a class="wa" target="_blank" rel="noopener" aria-label="WhatsApp" href="https://wa.me/918610990603?text=Hi%20KD%20Web%20Solutions">💬</a><footer><div class="w"><b>KD Web Solutions</b>Build • Grow • Succeed<br>© 2026 KD Web Solutions • +91 8610990603 • mrramakrishna2005@gmail.com</div></footer>
 <script>
@@ -160,6 +201,46 @@ var VT=[['Starter','₹499',['Up to 3 reels or shorts','Cuts, music and captions
 var _pr=V.pricing;V.pricing=function(){return _pr().replace('<p class="lead" style="margin-top:20px">','<span class="eyebrow" style="margin-top:56px">New</span><h2>Video Editing Packages</h2><p class="lead">Reels, YouTube videos and business promos edited professionally.</p><div class="g">'+VT.map(function(t){return card('🎬','Video Editing – '+t[0],'',t[1],t[3],'<ul>'+t[2].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>')}).join('')+'</div><p class="lead" style="margin-top:20px">')};
 document.getElementById('gs').onclick=function(){var sp=document.getElementById('sp');sp.classList.add('out');document.body.classList.remove('pre');scrollTo(0,0);setTimeout(function(){sp.remove()},700)};
 window.addEventListener('hashchange',route);route();
+</script>
+<script>
+(function(){
+var RM=matchMedia('(prefers-reduced-motion:reduce)').matches,root=document.documentElement;
+var pb=document.createElement('div');pb.id='pb';document.body.appendChild(pb);
+function sc(){var h=document.documentElement.scrollHeight-innerHeight;pb.style.width=(h>0?scrollY/h*100:0)+'%';root.style.setProperty('--py',(-scrollY*.12).toFixed(1))}
+addEventListener('scroll',sc,{passive:true});
+addEventListener('deviceorientation',function(e){if(e.gamma==null)return;var g=Math.max(-30,Math.min(30,e.gamma)),b=Math.max(-30,Math.min(30,(e.beta||0)-45));root.style.setProperty('--gx',(g*1.1).toFixed(1));root.style.setProperty('--gy',(b*1.1).toFixed(1))},true);
+var cv=document.createElement('canvas');cv.id='pc';document.body.insertBefore(cv,document.body.firstChild);
+var x=cv.getContext('2d'),W,H,P=[],N=innerWidth<760?38:80,run=!RM;
+function rs(){var d=Math.min(devicePixelRatio||1,2);W=cv.width=innerWidth*d;H=cv.height=innerHeight*d;x.setTransform(d,0,0,d,0,0);W=innerWidth;H=innerHeight}
+rs();addEventListener('resize',rs);
+for(var i=0;i<N;i++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.6,v:Math.random()*.35+.12,s:Math.random()*6.28,b:Math.random()<.25});
+function dr(t){if(!run)return;x.clearRect(0,0,W,H);for(var i=0;i<P.length;i++){var p=P[i];p.y-=p.v;p.x+=Math.sin(t/1800+p.s)*.25;if(p.y<-6){p.y=H+6;p.x=Math.random()*W}var a=.35+.45*Math.sin(t/700+p.s);x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fillStyle=(p.b?'rgba(110,150,255,':'rgba(240,200,100,')+Math.max(a,.08)+')';x.shadowColor=p.b?'#5b8dff':'#e9bf5f';x.shadowBlur=10;x.fill()}requestAnimationFrame(dr)}
+if(!RM)requestAnimationFrame(dr);
+document.addEventListener('visibilitychange',function(){var v=!document.hidden&&!RM;if(v&&!run){run=true;requestAnimationFrame(dr)}else if(!v)run=false});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+function spot(e){var c=e.target.closest&&e.target.closest('.c');if(!c)return;var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')}
+document.addEventListener('pointermove',spot,{passive:true});document.addEventListener('pointerdown',spot,{passive:true});
+document.addEventListener('click',function(e){if(e.target.closest('.btn,#bn a,.wa,#links a')&&navigator.vibrate)navigator.vibrate(10)});
+var _e=enh;enh=function(){_e();var st=document.querySelector('.stats');if(st&&!document.querySelector('.mq')){var t=['Business Websites','E-commerce Stores','Portfolio Sites','Figma to HTML','AI Automation','Video Editing','Google Sheets Forms','WhatsApp Ordering','Fast and Mobile First'].map(function(s){return '<span>'+s+'</span>'}).join('');var m=document.createElement('div');m.className='mq';m.innerHTML='<div class="mqt">'+t+t+'</div>';st.parentNode.insertBefore(m,st)}
+var k=0;document.querySelectorAll('.c,.step,details,.stats div,.lead,h2,form').forEach(function(el){if(el.classList.contains('rv'))return;el.classList.add('rv');el.style.setProperty('--d',((k++%4)*.09)+'s');io.observe(el)});sc()};
+enh();
+})();
+</script>
+<script>
+(function(){
+var root=document.documentElement,lt=0;
+function mk(c,x,y,css){var d=document.createElement('b');d.className=c;d.style.cssText='left:'+x+'px;top:'+y+'px;'+(css||'');document.body.appendChild(d);setTimeout(function(){d.remove()},900)}
+function burst(x,y){mk('tr',x,y);mk('tr b',x,y);for(var i=0;i<14;i++){var a=i/14*6.283+Math.random()*.4,r=38+Math.random()*52;mk('tp'+(i%3?'':' b'),x,y,'--dx:'+(Math.cos(a)*r)+'px;--dy:'+(Math.sin(a)*r)+'px;animation-delay:'+(Math.random()*.05)+'s')}}
+function trail(x,y){var n=Date.now();if(n-lt<28)return;lt=n;mk('tt',x,y)}
+function logoPush(x,y){root.style.setProperty('--gx',((x/innerWidth-.5)*60).toFixed(1));root.style.setProperty('--gy',((y/innerHeight-.5)*60).toFixed(1))}
+var pr=null;
+function press(t){var el=t.closest&&t.closest('.c,.btn,#links a,#bn a,.wa,.step,details');if(el){el.classList.add('pressed');pr=el}}
+function rel(){if(pr){var e=pr;setTimeout(function(){e.classList.remove('pressed')},160);pr=null}}
+document.addEventListener('pointerdown',function(e){burst(e.clientX,e.clientY);logoPush(e.clientX,e.clientY);press(e.target)},{passive:true});
+document.addEventListener('touchmove',function(e){var t=e.touches[0];if(t){trail(t.clientX,t.clientY);logoPush(t.clientX,t.clientY)}},{passive:true});
+document.addEventListener('pointermove',function(e){if(e.pointerType==='mouse'&&e.buttons)trail(e.clientX,e.clientY)},{passive:true});
+['pointerup','pointercancel','touchend','touchcancel'].forEach(function(n){document.addEventListener(n,rel,{passive:true})});
+})();
 </script>
 </body>
 </html>
